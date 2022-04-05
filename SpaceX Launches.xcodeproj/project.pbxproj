@@ -17,6 +17,9 @@
 		E32EC2C027FC16F6007B815F /* MainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32EC2BA27FC16F6007B815F /* MainModels.swift */; };
 		E32EC2C127FC16F6007B815F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32EC2BB27FC16F6007B815F /* MainViewController.swift */; };
 		E32EC2C227FC16F6007B815F /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32EC2BC27FC16F6007B815F /* MainInteractor.swift */; };
+		E32EC2C527FC2799007B815F /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32EC2C427FC2799007B815F /* InformationView.swift */; };
+		E32EC2C827FC2925007B815F /* SpaceRocketModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32EC2C727FC2925007B815F /* SpaceRocketModel.swift */; };
+		E32EC2CA27FC2C56007B815F /* LaunchesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32EC2C927FC2C56007B815F /* LaunchesModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		E32EC2BA27FC16F6007B815F /* MainModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModels.swift; sourceTree = "<group>"; };
 		E32EC2BB27FC16F6007B815F /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E32EC2BC27FC16F6007B815F /* MainInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractor.swift; sourceTree = "<group>"; };
+		E32EC2C427FC2799007B815F /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
+		E32EC2C727FC2925007B815F /* SpaceRocketModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceRocketModel.swift; sourceTree = "<group>"; };
+		E32EC2C927FC2C56007B815F /* LaunchesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +70,7 @@
 		E32EC2A027FC15D1007B815F /* SpaceX Launches */ = {
 			isa = PBXGroup;
 			children = (
+				E32EC2C627FC2903007B815F /* Models */,
 				E32EC2B627FC169A007B815F /* Modules */,
 				E32EC2B527FC1686007B815F /* SystemDelegate */,
 				E32EC2AA27FC15D8007B815F /* Assets.xcassets */,
@@ -85,14 +92,32 @@
 		E32EC2B627FC169A007B815F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				E32EC2B727FC16F6007B815F /* MainPresenter.swift */,
 				E32EC2B827FC16F6007B815F /* MainWorker.swift */,
 				E32EC2B927FC16F6007B815F /* MainRouter.swift */,
 				E32EC2BA27FC16F6007B815F /* MainModels.swift */,
-				E32EC2BB27FC16F6007B815F /* MainViewController.swift */,
+				E32EC2B727FC16F6007B815F /* MainPresenter.swift */,
 				E32EC2BC27FC16F6007B815F /* MainInteractor.swift */,
+				E32EC2BB27FC16F6007B815F /* MainViewController.swift */,
+				E32EC2C327FC276E007B815F /* Views */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		E32EC2C327FC276E007B815F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E32EC2C427FC2799007B815F /* InformationView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E32EC2C627FC2903007B815F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E32EC2C727FC2925007B815F /* SpaceRocketModel.swift */,
+				E32EC2C927FC2C56007B815F /* LaunchesModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,8 +194,11 @@
 				E32EC2A427FC15D1007B815F /* SceneDelegate.swift in Sources */,
 				E32EC2BE27FC16F6007B815F /* MainWorker.swift in Sources */,
 				E32EC2BD27FC16F6007B815F /* MainPresenter.swift in Sources */,
+				E32EC2C827FC2925007B815F /* SpaceRocketModel.swift in Sources */,
+				E32EC2CA27FC2C56007B815F /* LaunchesModel.swift in Sources */,
 				E32EC2C227FC16F6007B815F /* MainInteractor.swift in Sources */,
 				E32EC2C027FC16F6007B815F /* MainModels.swift in Sources */,
+				E32EC2C527FC2799007B815F /* InformationView.swift in Sources */,
 				E32EC2BF27FC16F6007B815F /* MainRouter.swift in Sources */,
 				E32EC2C127FC16F6007B815F /* MainViewController.swift in Sources */,
 			);

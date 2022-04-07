@@ -14,7 +14,7 @@ import UIKit
 
 protocol MainPresentationLogic
 {
-  func presentSomething(response: Main.Something.Response)
+    func presentSomething(response: Main.Something.Response.ResponseType)
 }
 
 class MainPresenter: MainPresentationLogic
@@ -23,9 +23,11 @@ class MainPresenter: MainPresentationLogic
   
   // MARK: Do something
   
-  func presentSomething(response: Main.Something.Response)
+    func presentSomething(response: Main.Something.Response.ResponseType)
   {
-    let viewModel = Main.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
+      switch response {
+      case .presentSpaceRocket(let spaseRockets):
+          viewController?.displaySomething(viewModel: .spaceRocket(spaseRockets))
+      }
   }
 }

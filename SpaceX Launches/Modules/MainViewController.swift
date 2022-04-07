@@ -12,9 +12,9 @@
 
 import UIKit
 
-protocol MainDisplayLogic: class
+protocol MainDisplayLogic: AnyObject
 {
-  func displaySomething(viewModel: Main.Something.ViewModel)
+    func displaySomething(viewModel: Main.Something.ViewModel.viewModelData)
 }
 
 class MainViewController: UIViewController, MainDisplayLogic
@@ -69,22 +69,63 @@ class MainViewController: UIViewController, MainDisplayLogic
   override func viewDidLoad()
   {
     super.viewDidLoad()
-      view.backgroundColor = .brown
     doSomething()
   }
   
   // MARK: Do something
   
-  //@IBOutlet weak var nameTextField: UITextField!
+    private var scrollView: UIScrollView!
+    private var pageControl: UIPageControl!
   
   func doSomething()
   {
-    let request = Main.Something.Request()
-    interactor?.doSomething(request: request)
+      interactor?.doSomething(request: .getSpaceRocket)
   }
   
-  func displaySomething(viewModel: Main.Something.ViewModel)
+    func displaySomething(viewModel: Main.Something.ViewModel.viewModelData)
   {
-    //nameTextField.text = viewModel.name
+      switch viewModel {
+      case .spaceRocket(let spaceRocket):
+          print("spaceRocket.count = \(spaceRocket.count)")
+          configureUI(with: spaceRocket)
+      }
+      
   }
+    
+    private func configureUI(with model: [SpaceRocketModel]) {
+
+        pageControl = UIPageControl(frame: CGRect(x: 0, y: view.frame.size.height - 72, width: view.frame.size.width, height: 72))
+        pageControl.numberOfPages = model.count
+        pageControl.isUserInteractionEnabled = false
+        pageControl.backgroundColor = .init(red: 18/255, green: 18/255, blue: 18/255, alpha: 1)
+        pageControl.alpha = 0.95
+        
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+        scrollView.contentSize = CGSize(width: CGFloat(model.count) * view.frame.size.width,
+                                        height: view.frame.size.height)
+        
+        for (index, infModel) in model.enumerated() {
+            let informationView = InformationView(frame: CGRect(
+                                                            x: CGFloat(index) * view.frame.size.width,
+                                                            y: 0,
+                                                            width: view.frame.size.width,
+                                                            height: view.frame.size.height))
+            informationView.model = infModel
+            informationView.applyData()
+            scrollView.addSubview(informationView)
+        }
+        
+        scrollView.delegate = self
+        scrollView.isPagingEnabled = true
+        scrollView.bounces = false
+        scrollView.showsHorizontalScrollIndicator = false
+        view.addSubview(scrollView)
+        view.addSubview(pageControl)
+    }
+}
+
+extension MainViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        pageControl.currentPage = Int(floor(Float(scrollView.contentOffset.x / scrollView.frame.size.width)))
+    }
 }

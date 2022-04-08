@@ -13,6 +13,9 @@ class InfoStageView: UIView {
     private var label1: MyDoubleLabel = MyDoubleLabel()
     private var label2: MyDoubleLabel = MyDoubleLabel()
     private var label3: MyDoubleLabel = MyDoubleLabel()
+    private var titleLabel: UILabel?// = UILabel()
+    private var topAnchorLabel1: NSLayoutConstraint!
+    
     var space: CGFloat
     
     init(frame: CGRect, space: CGFloat) {
@@ -25,8 +28,10 @@ class InfoStageView: UIView {
         label2.translatesAutoresizingMaskIntoConstraints = false
         label3.translatesAutoresizingMaskIntoConstraints = false
     
+        topAnchorLabel1 = label1.topAnchor.constraint(equalTo: self.topAnchor)
+        
         NSLayoutConstraint.activate([
-            label1.topAnchor.constraint(equalTo: self.topAnchor),
+            topAnchorLabel1,
             label1.leftAnchor.constraint(equalTo: self.leftAnchor),
             label1.rightAnchor.constraint(equalTo: self.rightAnchor),
             
@@ -39,6 +44,26 @@ class InfoStageView: UIView {
             label3.rightAnchor.constraint(equalTo: self.rightAnchor),
             label3.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+    }
+    
+    func setTitle(title: String) {
+        titleLabel = UILabel()
+        guard let titleLabel = titleLabel else { return } // мозг не варит)
+        addSubview(titleLabel)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.text = title
+        titleLabel.font = .boldSystemFont(ofSize: 24.0)
+        titleLabel.textColor = .init(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        
+        topAnchorLabel1.isActive = false
+        
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
+            titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor),
+            titleLabel.rightAnchor.constraint(equalTo: self.rightAnchor),
+            label1.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16)
+        ])
+        
     }
     
     func setText(label1Text: (String, String), label2Text: (String, String), label3Text: (String, String)) {

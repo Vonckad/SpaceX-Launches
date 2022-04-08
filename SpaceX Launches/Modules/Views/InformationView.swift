@@ -44,18 +44,20 @@ class InformationView: UIView {
                                 label2Text: ("Страна", (model?.country ?? "")),
                                 label3Text: ("Стоймость запуска", "\(model?.cost_per_launch)"))
         
+        firstStageLabel.setTitle(title: "ПЕРВАЯ СТУПЕНЬ")
         firstStageLabel.setText(label1Text: ("Количество двигателей", "\(model?.first_stage?.engines)"),
                                 label2Text: ("Количество топлива", "\(model?.first_stage?.fuel_amount_tons)"),
                                 label3Text: ("Время сгорания", "\(model?.first_stage?.burn_time_sec)"))
         
+        secondStageLabel.setTitle(title: "ВТОРАЯ СТУПЕНЬ")
         secondStageLabel.setText(label1Text: ("Количество двигателей", "\(model?.second_stage?.engines)"),
                                  label2Text: ("Количество топлива", "\(model?.second_stage?.fuel_amount_tons)"),
                                  label3Text: ("Время сгорания", "\(model?.second_stage?.burn_time_sec)"))
+        
     }
     
     private func loadImage() {
         if let imageUrl = URL(string: model?.flickr_images?.first ?? "") {
-            print("imageUrl = \(imageUrl)")
             DispatchQueue.global().async { [weak self] in
                 if let imageData = try? Data(contentsOf: imageUrl) {
                     DispatchQueue.main.async { [weak self] in
@@ -98,19 +100,20 @@ class InformationView: UIView {
 
         headerLabel = UILabel()
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
-        headerLabel.font = .boldSystemFont(ofSize: 40.0)
+        headerLabel.font = .boldSystemFont(ofSize: 32.0)
         headerLabel.textColor = .init(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         
         headerView = UIView()
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.backgroundColor = .black//.init(red: 18/255, green: 19/255, blue: 25/255, alpha: 1)
+        headerView.backgroundColor = .black
         headerView.addSubview(headerLabel)
+        headerView.layer.cornerRadius = 32
         
         NSLayoutConstraint.activate([
-            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 8),
+            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 48),
             headerLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 32),
-            headerLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -8),
-            headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -8),
+            headerLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -32),
+            headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -82),
         ])
         
         let flowLayout = UICollectionViewFlowLayout()
@@ -133,67 +136,65 @@ class InformationView: UIView {
         watchButton.setTitleColor(.init(red: 246/255, green: 246/255, blue: 246/255, alpha: 1), for: .normal)
         watchButton.addTarget(self, action: #selector(watchNow), for: .touchUpInside)
         watchButton.backgroundColor = UIColor.init(red: 33/255, green: 33/255, blue: 33/255, alpha: 1)
-        watchButton.layer.cornerRadius = 8
+        watchButton.layer.cornerRadius = 12
 
         self.addSubview(scrollView)
         scrollView.addSubview(backgroundView)
         backgroundView.addSubview(imageView)
+        scrollView.addSubview(headerView)
+        scrollView.addSubview(informationCollectionView)
         scrollView.addSubview(infoLabel)
         scrollView.addSubview(firstStageLabel)
         scrollView.addSubview(secondStageLabel)
-        scrollView.addSubview(headerView)
-        scrollView.addSubview(informationCollectionView)
         scrollView.addSubview(watchButton)
         
         // configure constraints
         let topImageViewConstrain = self.topAnchor.constraint(equalTo: imageView.topAnchor)
         topImageViewConstrain.priority = .init(rawValue: 900)
-        let heightAnchorCastCollectionView = informationCollectionView.heightAnchor.constraint(equalToConstant: 180)
         
         NSLayoutConstraint.activate([
             
             topImageViewConstrain,
-            self.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             scrollView.topAnchor.constraint(equalTo: self.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scrollView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            scrollView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            headerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 250),
-            headerView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            headerView.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24),
+            headerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: self.frame.size.height / 3.5),
+            headerView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            headerView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            headerView.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -32),
             
-            informationCollectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-            informationCollectionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: informationCollectionView.trailingAnchor),
-            heightAnchorCastCollectionView,
+            informationCollectionView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -50),
+            informationCollectionView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            informationCollectionView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            informationCollectionView.heightAnchor.constraint(equalToConstant: 96),
             
-            infoLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -32),
+            infoLabel.topAnchor.constraint(equalTo: informationCollectionView.bottomAnchor, constant: 32),
+            infoLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 32),
+            infoLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -32),
             
-            backgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            backgroundView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
-            infoLabel.topAnchor.constraint(equalTo: informationCollectionView.bottomAnchor, constant: 8),
-            scrollView.bottomAnchor.constraint(equalTo: watchButton.bottomAnchor, constant: 86),
+            firstStageLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 32),
+            firstStageLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 32),
+            firstStageLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -32),
             
-            scrollView.trailingAnchor.constraint(equalTo: infoLabel.trailingAnchor),
-            infoLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
+            secondStageLabel.topAnchor.constraint(equalTo: firstStageLabel.bottomAnchor, constant: 32),
+            secondStageLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 32),
+            secondStageLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -32),
             
-            firstStageLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 8),
-            firstStageLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
-            scrollView.rightAnchor.constraint(equalTo: firstStageLabel.rightAnchor, constant: 32),
-            
-            secondStageLabel.topAnchor.constraint(equalTo: firstStageLabel.bottomAnchor, constant: 8),
-            secondStageLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
-            scrollView.rightAnchor.constraint(equalTo: secondStageLabel.rightAnchor, constant: 32),
-            
-            watchButton.topAnchor.constraint(equalTo: secondStageLabel.bottomAnchor, constant: 500),
-            watchButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 64),
-            watchButton.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: -64),
-            watchButton.heightAnchor.constraint(equalToConstant: 44),
+            watchButton.topAnchor.constraint(equalTo: secondStageLabel.bottomAnchor, constant: 32),
+            watchButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 32),
+            watchButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -32),
+            watchButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -64),
+            watchButton.heightAnchor.constraint(equalToConstant: 56),
             
             imageView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
             backgroundView.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
-            backgroundView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor)
+            backgroundView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+            backgroundView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            backgroundView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            backgroundView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            scrollView.rightAnchor.constraint(equalTo: backgroundView.rightAnchor),
         ])
         
     }

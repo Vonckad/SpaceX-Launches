@@ -41,7 +41,12 @@ class MainInteractor: MainBusinessLogic, MainDataStore
           service.fetchSpaceRokets { result in
               self.model = result ?? [SpaceRocketModel]()
               self.presenter?.presentSomething(response: .presentSpaceRocket(result ?? [SpaceRocketModel]()))
-          }   
+          }
+      case .getRocketLaunches(let rocket):
+          let service: ServiceFetcherProtocol = ServiceFetcher()
+          service.fetchSpaceRokets(rocket: rocket) { launches in
+              launches?.docs.compactMap { print($0.date_utc)}
+          }
       }
   }
 }

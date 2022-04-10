@@ -112,6 +112,7 @@ class MainViewController: UIViewController, MainDisplayLogic
                                                             height: view.frame.size.height))
             informationView.model = infModel
             informationView.applyData()
+            informationView.delegate = self
             scrollView.addSubview(informationView)
         }
         
@@ -127,5 +128,11 @@ class MainViewController: UIViewController, MainDisplayLogic
 extension MainViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(floor(Float(scrollView.contentOffset.x / scrollView.frame.size.width)))
+    }
+}
+
+extension MainViewController: InformationViewDelegate {
+    func watchLaunches(_ rocket: String) {
+        interactor?.doSomething(request: .getRocketLaunches(rocket))
     }
 }

@@ -9,14 +9,40 @@ import Foundation
 
 protocol ServiceProtocol {
     func request(complition: @escaping (Data?, Error?) -> ())
+    func requestLaunches(rocket: String, complition: @escaping (Data?, Error?) -> ())
 }
 
 class Service: ServiceProtocol {
     
     func request(complition: @escaping (Data?, Error?) -> ()) {
-        let url = url()
+        let url = url(isQuery: false)
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "get"
+        let dataTask = createDataTask(from: urlRequest, complition: complition)
+        dataTask.resume()
+        print("url = \(url)")
+    }
+    
+    func requestLaunches(rocket: String, complition: @escaping (Data?, Error?) -> ()) {
+        let param = [
+            "query": [
+                "rocket": [
+                    "\(rocket)"
+                ]
+            ],
+            "options": [
+                "sort" : [
+                    "date_utc": "desc"
+                ]
+            ]
+        ]
+        
+        let url = url(isQuery: true)
+        var urlRequest = URLRequest(url: url)
+        let headers = [ "Content-Type": "application/json" ]
+        urlRequest.httpMethod = "POST"
+        urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: param)
+        urlRequest.allHTTPHeaderFields = headers
         let dataTask = createDataTask(from: urlRequest, complition: complition)
         dataTask.resume()
         print("url = \(url)")
@@ -30,11 +56,11 @@ class Service: ServiceProtocol {
         }
     }
 
-    private func url() -> URL {
+    private func url(isQuery: Bool) -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.spacexdata.com"
-        components.path = "/v4/rockets" //: "/v4/launches"
+        components.path = isQuery ? "/v4/launches/query" : "/v4/rockets"
         return components.url!
     }
 }

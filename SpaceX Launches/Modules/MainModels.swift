@@ -22,6 +22,7 @@ enum Main
     {
         enum RequestType {
             case getSpaceRocket
+            case getRocketLaunches(_ : String)
         }
     }
     struct Response

@@ -20,12 +20,21 @@ enum Main
   {
     struct Request
     {
+        enum RequestType {
+            case getSpaceRocket
+        }
     }
     struct Response
     {
+        enum ResponseType {
+            case presentSpaceRocket(_ : [SpaceRocketModel])
+        }
     }
     struct ViewModel
     {
+        enum viewModelData {
+            case spaceRocket(_ : [SpaceRocketModel])
+        }
     }
   }
 }

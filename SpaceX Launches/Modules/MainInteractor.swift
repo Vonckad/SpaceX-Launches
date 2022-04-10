@@ -14,28 +14,34 @@ import UIKit
 
 protocol MainBusinessLogic
 {
-  func doSomething(request: Main.Something.Request)
+    func doSomething(request: Main.Something.Request.RequestType)
 }
 
 protocol MainDataStore
 {
-  //var name: String { get set }
+    var model: [SpaceRocketModel] { get set }
 }
 
 class MainInteractor: MainBusinessLogic, MainDataStore
 {
   var presenter: MainPresentationLogic?
   var worker: MainWorker?
-  //var name: String = ""
+  var model = [SpaceRocketModel]()
   
   // MARK: Do something
   
-  func doSomething(request: Main.Something.Request)
+    func doSomething(request: Main.Something.Request.RequestType)
   {
     worker = MainWorker()
     worker?.doSomeWork()
-    
-    let response = Main.Something.Response()
-    presenter?.presentSomething(response: response)
+      
+      switch request {
+      case .getSpaceRocket:
+          let service: ServiceFetcherProtocol = ServiceFetcher()
+          service.fetchSpaceRokets { result in
+              self.model = result ?? [SpaceRocketModel]()
+              self.presenter?.presentSomething(response: .presentSpaceRocket(result ?? [SpaceRocketModel]()))
+          }   
+      }
   }
 }

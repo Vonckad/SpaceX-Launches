@@ -9,6 +9,7 @@ import Foundation
 
 protocol ServiceFetcherProtocol {
     func fetchSpaceRokets(complition: @escaping ([SpaceRocketModel]?) -> Void)
+    func fetchSpaceRokets(rocket: String, complition: @escaping (LaunchesModel?) -> Void)
 }
 
 class ServiceFetcher: ServiceFetcherProtocol {
@@ -26,6 +27,18 @@ class ServiceFetcher: ServiceFetcherProtocol {
                 complition(nil) //можно подумать передать ошибку дальше
             }
             let decod = self.decodJSON(type: [SpaceRocketModel].self, from: data)
+            complition(decod)
+        }
+    }
+    
+    func fetchSpaceRokets(rocket: String, complition: @escaping (LaunchesModel?) -> Void) {
+        service.requestLaunches(rocket: rocket) { data, error in
+            if let error = error {
+                print("error requestLaunches = \(error.localizedDescription )")
+                complition(nil) //можно подумать передать ошибку дальше
+            }
+        
+            let decod = self.decodJSON(type: LaunchesModel.self, from: data)
             complition(decod)
         }
     }

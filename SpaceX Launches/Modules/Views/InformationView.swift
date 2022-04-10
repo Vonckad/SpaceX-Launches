@@ -124,7 +124,7 @@ class InformationView: UIView {
         informationCollectionView.translatesAutoresizingMaskIntoConstraints = false
         informationCollectionView.showsHorizontalScrollIndicator = false
         informationCollectionView.backgroundColor = .black
-        informationCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        informationCollectionView.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.reuseIdentifier)
         informationCollectionView.dataSource = self
         informationCollectionView.delegate = self
         informationCollectionView.contentInset.left = 32
@@ -215,10 +215,26 @@ extension InformationView: UICollectionViewDataSource, UICollectionViewDelegate 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = informationCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let cell = informationCollectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.reuseIdentifier, for: indexPath) as! InfoCollectionViewCell
         
         cell.backgroundColor = .init(red: 33/255, green: 33/255, blue: 33/255, alpha: 1)
         cell.layer.cornerRadius = 32
+        
+        guard let model = model else { return cell }
+
+        switch indexPath.row {
+        case 0:
+            cell.addData(value: "\(model.height!.meters!)", title: "Высота, m")
+        case 1:
+            cell.addData(value: "\(model.diameter!.meters!)", title: "Диаметр, m")
+        case 2:
+            cell.addData(value: "\(model.mass!.kg!)", title: "Масса, kg")
+        case 3:
+            cell.addData(value: "\(model.payload_weights![0].kg!)", title: "Нагрузка, kg")
+        default:
+            break
+        }
+        
         return cell
     }
 }

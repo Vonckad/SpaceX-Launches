@@ -9,6 +9,7 @@ import UIKit
 
 protocol InformationViewDelegate {
     func watchLaunches()
+    func openSettings()
 }
 
 class InformationView: UIView {
@@ -16,6 +17,7 @@ class InformationView: UIView {
     private var scrollView: UIScrollView!
     private var headerLabel: UILabel!
     private var headerView: UIView!
+    private var settingButton: UIButton!
     private var informationCollectionView: UICollectionView!
     private var infoLabel: InfoStageView!
     private var firstStageLabel: InfoStageView!
@@ -54,6 +56,17 @@ class InformationView: UIView {
                                  label2Text: ("Количество топлива", "\(model?.second_stage?.fuel_amount_tons)"),
                                  label3Text: ("Время сгорания", "\(model?.second_stage?.burn_time_sec)"))
         
+    }
+    
+    private func setupText(bolt: String, normal: String) -> NSMutableAttributedString {
+
+        let attributsBold = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .bold)]
+        let attributsNormal = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .regular)]
+        let attributedString = NSMutableAttributedString(string: bolt, attributes: attributsBold)
+        let normalStringPart = NSMutableAttributedString(string: normal, attributes: attributsNormal)
+        attributedString.append(normalStringPart)
+
+        return attributedString
     }
     
     private func loadImage() {
@@ -103,10 +116,16 @@ class InformationView: UIView {
         headerLabel.font = .boldSystemFont(ofSize: 32.0)
         headerLabel.textColor = .init(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
         
+        settingButton = UIButton()
+        settingButton.setImage(UIImage(named: "setting"), for: .normal)
+        settingButton.addTarget(self, action: #selector(settingAction), for: .touchUpInside)
+        settingButton.translatesAutoresizingMaskIntoConstraints = false
+        
         headerView = UIView()
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.backgroundColor = .black
         headerView.addSubview(headerLabel)
+        headerView.addSubview(settingButton)
         headerView.layer.cornerRadius = 32
         
         NSLayoutConstraint.activate([
@@ -114,6 +133,11 @@ class InformationView: UIView {
             headerLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 32),
             headerLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -32),
             headerLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -82),
+            
+            settingButton.topAnchor.constraint(equalTo: headerLabel.topAnchor),
+            settingButton.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -35),
+            settingButton.widthAnchor.constraint(equalToConstant: 32),
+            settingButton.heightAnchor.constraint(equalToConstant: 32),
         ])
         
         let flowLayout = UICollectionViewFlowLayout()
@@ -202,7 +226,11 @@ class InformationView: UIView {
     @objc func watchNow() {
         delegate?.watchLaunches()
     }
-
+    
+    @objc func settingAction() {
+        delegate?.openSettings()
+    }
+    
     override func draw(_ rect: CGRect) {
         // Drawing code
     }

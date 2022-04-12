@@ -152,4 +152,8 @@ extension MainViewController: InformationViewDelegate {
 //        interactor?.doSomething(request: .getRocketLaunches(rocket))
         router?.routeToSomewhere(index: pageControl.currentPage)
     }
+    
+    func openSettings() {
+        router?.routeToSettins()
+    }
 }

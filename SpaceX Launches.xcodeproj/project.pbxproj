@@ -23,6 +23,8 @@
 		E32EC2CD27FC4ED0007B815F /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32EC2CC27FC4ED0007B815F /* Service.swift */; };
 		E32EC2CF27FC50A9007B815F /* ServiceFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32EC2CE27FC50A9007B815F /* ServiceFetcher.swift */; };
 		E3B50DB528005FCF00AF5CBD /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B50DB428005FCF00AF5CBD /* InfoCollectionViewCell.swift */; };
+		E3B50DB928034F5A00AF5CBD /* LaunchesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B50DB828034F5A00AF5CBD /* LaunchesTableViewController.swift */; };
+		E3B50DBC28042F8700AF5CBD /* LaunchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B50DBB28042F8600AF5CBD /* LaunchesTableViewCell.swift */; };
 		E3BD2B6F27FF525D00270438 /* MyDoubleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BD2B6E27FF525D00270438 /* MyDoubleLabel.swift */; };
 		E3BD2B7127FF529C00270438 /* InfoStageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BD2B7027FF529C00270438 /* InfoStageView.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +48,8 @@
 		E32EC2CC27FC4ED0007B815F /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		E32EC2CE27FC50A9007B815F /* ServiceFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFetcher.swift; sourceTree = "<group>"; };
 		E3B50DB428005FCF00AF5CBD /* InfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		E3B50DB828034F5A00AF5CBD /* LaunchesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesTableViewController.swift; sourceTree = "<group>"; };
+		E3B50DBB28042F8600AF5CBD /* LaunchesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesTableViewCell.swift; sourceTree = "<group>"; };
 		E3BD2B6E27FF525D00270438 /* MyDoubleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDoubleLabel.swift; sourceTree = "<group>"; };
 		E3BD2B7027FF529C00270438 /* InfoStageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoStageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,13 +107,8 @@
 		E32EC2B627FC169A007B815F /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				E32EC2B827FC16F6007B815F /* MainWorker.swift */,
-				E32EC2B927FC16F6007B815F /* MainRouter.swift */,
-				E32EC2BA27FC16F6007B815F /* MainModels.swift */,
-				E32EC2B727FC16F6007B815F /* MainPresenter.swift */,
-				E32EC2BC27FC16F6007B815F /* MainInteractor.swift */,
-				E32EC2BB27FC16F6007B815F /* MainViewController.swift */,
-				E32EC2C327FC276E007B815F /* Views */,
+				E3B50DB728034F1100AF5CBD /* Main */,
+				E3B50DB628034EF800AF5CBD /* Launches */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -141,6 +140,37 @@
 				E32EC2CE27FC50A9007B815F /* ServiceFetcher.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		E3B50DB628034EF800AF5CBD /* Launches */ = {
+			isa = PBXGroup;
+			children = (
+				E3B50DB828034F5A00AF5CBD /* LaunchesTableViewController.swift */,
+				E3B50DBA28042F6B00AF5CBD /* Views */,
+			);
+			path = Launches;
+			sourceTree = "<group>";
+		};
+		E3B50DB728034F1100AF5CBD /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				E32EC2B827FC16F6007B815F /* MainWorker.swift */,
+				E32EC2B927FC16F6007B815F /* MainRouter.swift */,
+				E32EC2BA27FC16F6007B815F /* MainModels.swift */,
+				E32EC2B727FC16F6007B815F /* MainPresenter.swift */,
+				E32EC2BC27FC16F6007B815F /* MainInteractor.swift */,
+				E32EC2BB27FC16F6007B815F /* MainViewController.swift */,
+				E32EC2C327FC276E007B815F /* Views */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		E3B50DBA28042F6B00AF5CBD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E3B50DBB28042F8600AF5CBD /* LaunchesTableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,11 +245,13 @@
 			files = (
 				E32EC2A227FC15D1007B815F /* AppDelegate.swift in Sources */,
 				E32EC2A427FC15D1007B815F /* SceneDelegate.swift in Sources */,
+				E3B50DB928034F5A00AF5CBD /* LaunchesTableViewController.swift in Sources */,
 				E32EC2BE27FC16F6007B815F /* MainWorker.swift in Sources */,
 				E3BD2B6F27FF525D00270438 /* MyDoubleLabel.swift in Sources */,
 				E32EC2CF27FC50A9007B815F /* ServiceFetcher.swift in Sources */,
 				E32EC2BD27FC16F6007B815F /* MainPresenter.swift in Sources */,
 				E32EC2C827FC2925007B815F /* SpaceRocketModel.swift in Sources */,
+				E3B50DBC28042F8700AF5CBD /* LaunchesTableViewCell.swift in Sources */,
 				E32EC2CD27FC4ED0007B815F /* Service.swift in Sources */,
 				E3BD2B7127FF529C00270438 /* InfoStageView.swift in Sources */,
 				E32EC2CA27FC2C56007B815F /* LaunchesModel.swift in Sources */,

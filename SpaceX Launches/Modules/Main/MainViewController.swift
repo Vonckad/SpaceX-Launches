@@ -71,6 +71,11 @@ class MainViewController: UIViewController, MainDisplayLogic
     super.viewDidLoad()
     doSomething()
   }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
   
   // MARK: Do something
   
@@ -86,14 +91,18 @@ class MainViewController: UIViewController, MainDisplayLogic
   {
       switch viewModel {
       case .spaceRocket(let spaceRocket):
-          print("spaceRocket.count = \(spaceRocket.count)")
           configureUI(with: spaceRocket)
+//      case .showRocketLaunches:
+//          router?.routeToSomewhere(index: pageControl.currentPage)
+//      case .showDataRocketLaunches:
+//          router?.addDataLaunches()
       }
-      
   }
     
     private func configureUI(with model: [SpaceRocketModel]) {
-
+        navigationItem.backButtonTitle = "Назад"
+        
+        
         pageControl = UIPageControl(frame: CGRect(x: 0, y: view.frame.size.height - 72, width: view.frame.size.width, height: 72))
         pageControl.numberOfPages = model.count
         pageControl.isUserInteractionEnabled = false
@@ -120,8 +129,15 @@ class MainViewController: UIViewController, MainDisplayLogic
         scrollView.isPagingEnabled = true
         scrollView.bounces = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.contentInsetAdjustmentBehavior = .never
         view.addSubview(scrollView)
         view.addSubview(pageControl)
+        
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
 
@@ -132,7 +148,8 @@ extension MainViewController: UIScrollViewDelegate {
 }
 
 extension MainViewController: InformationViewDelegate {
-    func watchLaunches(_ rocket: String) {
-        interactor?.doSomething(request: .getRocketLaunches(rocket))
+    func watchLaunches() {
+//        interactor?.doSomething(request: .getRocketLaunches(rocket))
+        router?.routeToSomewhere(index: pageControl.currentPage)
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol InformationViewDelegate {
-    func watchLaunches(_ rocket: String)
+    func watchLaunches()
 }
 
 class InformationView: UIView {
@@ -200,7 +200,7 @@ class InformationView: UIView {
     }
     
     @objc func watchNow() {
-        delegate?.watchLaunches(model!.id!)
+        delegate?.watchLaunches()
     }
 
     override func draw(_ rect: CGRect) {

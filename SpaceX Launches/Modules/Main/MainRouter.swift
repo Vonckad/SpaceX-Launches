@@ -14,8 +14,8 @@ import UIKit
 
 @objc protocol MainRoutingLogic
 {
-    func routeToSomewhere(index: Int)
-//  func addDataLaunches()
+  func routeToSomewhere(index: Int)
+  func routeToSettins()
 }
 
 protocol MainDataPassing
@@ -38,6 +38,12 @@ class MainRouter: NSObject, MainRoutingLogic, MainDataPassing
       navigateToSomewhere(source: viewController!, destination: destinationVC)
   }
 
+    func routeToSettins() {
+        let settingVC = SettingsViewController()
+//        settingVC.modalPresentationStyle = .formSheet
+        viewController?.present(settingVC, animated: true)
+    }
+    
   // MARK: Navigation
   
   func navigateToSomewhere(source: MainViewController, destination: LaunchesTableViewController)

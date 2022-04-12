@@ -20,6 +20,7 @@ protocol MainBusinessLogic
 protocol MainDataStore
 {
     var model: [SpaceRocketModel] { get set }
+    var modelRocketLaunches: LaunchesModel { get set }
 }
 
 class MainInteractor: MainBusinessLogic, MainDataStore
@@ -27,8 +28,9 @@ class MainInteractor: MainBusinessLogic, MainDataStore
   var presenter: MainPresentationLogic?
   var worker: MainWorker?
   var model = [SpaceRocketModel]()
+  var modelRocketLaunches: LaunchesModel = .init(docs: [])
   
-  // MARK: Do something
+    // MARK: Do something
   
     func doSomething(request: Main.Something.Request.RequestType)
   {
@@ -42,11 +44,15 @@ class MainInteractor: MainBusinessLogic, MainDataStore
               self.model = result ?? [SpaceRocketModel]()
               self.presenter?.presentSomething(response: .presentSpaceRocket(result ?? [SpaceRocketModel]()))
           }
-      case .getRocketLaunches(let rocket):
-          let service: ServiceFetcherProtocol = ServiceFetcher()
-          service.fetchSpaceRokets(rocket: rocket) { launches in
-              launches?.docs.compactMap { print($0.date_utc)}
-          }
+//      case .getRocketLaunches(let rocket):
+//          presenter?.presentSomething(response: .presentRocketLaunches)
+//          let service: ServiceFetcherProtocol = ServiceFetcher()
+//          service.fetchSpaceRokets(rocket: rocket) { launches in
+//              guard let launches = launches else { return }
+//              self.modelRocketLaunches = launches
+//              self.presenter?.presentSomething(response: .loadedDataRocketLaunches)
+//              self.presenter?.presentSomething(response: .presentRocketLaunches)
+//          }
       }
   }
 }

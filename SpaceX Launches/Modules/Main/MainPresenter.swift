@@ -28,6 +28,10 @@ class MainPresenter: MainPresentationLogic
       switch response {
       case .presentSpaceRocket(let spaseRockets):
           viewController?.displaySomething(viewModel: .spaceRocket(spaseRockets))
+//      case .presentRocketLaunches:
+//          viewController?.displaySomething(viewModel: .showRocketLaunches)
+//      case .loadedDataRocketLaunches:
+//          viewController?.displaySomething(viewModel: .showDataRocketLaunches)
       }
   }
 }

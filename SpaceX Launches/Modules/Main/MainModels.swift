@@ -22,19 +22,23 @@ enum Main
     {
         enum RequestType {
             case getSpaceRocket
-            case getRocketLaunches(_ : String)
+//            case getRocketLaunches(_ : String)
         }
     }
     struct Response
     {
         enum ResponseType {
             case presentSpaceRocket(_ : [SpaceRocketModel])
+//            case presentRocketLaunches
+//            case loadedDataRocketLaunches
         }
     }
     struct ViewModel
     {
         enum viewModelData {
             case spaceRocket(_ : [SpaceRocketModel])
+//            case showRocketLaunches
+//            case showDataRocketLaunches
         }
     }
   }

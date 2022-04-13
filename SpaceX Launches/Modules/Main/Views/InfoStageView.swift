@@ -10,10 +10,10 @@ import UIKit
 
 class InfoStageView: UIView {
     
-    private var label1: MyDoubleLabel = MyDoubleLabel()
-    private var label2: MyDoubleLabel = MyDoubleLabel()
-    private var label3: MyDoubleLabel = MyDoubleLabel()
-    private var titleLabel: UILabel?// = UILabel()
+    private var label1 = MyTripleLabel()
+    private var label2 = MyTripleLabel()
+    private var label3 = MyTripleLabel()
+    private var titleLabel: UILabel?
     private var topAnchorLabel1: NSLayoutConstraint!
     
     var space: CGFloat
@@ -48,7 +48,7 @@ class InfoStageView: UIView {
     
     func setTitle(title: String) {
         titleLabel = UILabel()
-        guard let titleLabel = titleLabel else { return } // мозг не варит)
+        guard let titleLabel = titleLabel else { return }
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
@@ -63,13 +63,21 @@ class InfoStageView: UIView {
             titleLabel.rightAnchor.constraint(equalTo: self.rightAnchor),
             label1.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16)
         ])
-        
     }
     
     func setText(label1Text: (String, String), label2Text: (String, String), label3Text: (String, String)) {
-        label1.setText(leftText: label1Text.0, rightText: label1Text.1)
-        label2.setText(leftText: label2Text.0, rightText: label2Text.1)
-        label3.setText(leftText: label3Text.0, rightText: label3Text.1)
+        
+        label1.setText(leftText: label1Text.0,
+                       rightText: label1Text.1,
+                       metteringText: (self.topAnchorLabel1.isActive == false) ? "#" : nil)
+        
+        label2.setText(leftText: label2Text.0,
+                       rightText: label2Text.1,
+                       metteringText: (self.topAnchorLabel1.isActive == false) ? "ton" : nil)
+        
+        label3.setText(leftText: label3Text.0,
+                       rightText: label3Text.1,
+                       metteringText: (self.topAnchorLabel1.isActive == false) ? "sec" : nil)
     }
     
     func setTextColor(_ color: UIColor) {

@@ -26,7 +26,7 @@
 		E3B50DB928034F5A00AF5CBD /* LaunchesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B50DB828034F5A00AF5CBD /* LaunchesTableViewController.swift */; };
 		E3B50DBC28042F8700AF5CBD /* LaunchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B50DBB28042F8600AF5CBD /* LaunchesTableViewCell.swift */; };
 		E3B50DBF2805C1A900AF5CBD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B50DBE2805C1A900AF5CBD /* SettingsViewController.swift */; };
-		E3BD2B6F27FF525D00270438 /* MyDoubleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BD2B6E27FF525D00270438 /* MyDoubleLabel.swift */; };
+		E3BD2B6F27FF525D00270438 /* MyTripleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BD2B6E27FF525D00270438 /* MyTripleLabel.swift */; };
 		E3BD2B7127FF529C00270438 /* InfoStageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BD2B7027FF529C00270438 /* InfoStageView.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +52,7 @@
 		E3B50DB828034F5A00AF5CBD /* LaunchesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesTableViewController.swift; sourceTree = "<group>"; };
 		E3B50DBB28042F8600AF5CBD /* LaunchesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesTableViewCell.swift; sourceTree = "<group>"; };
 		E3B50DBE2805C1A900AF5CBD /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		E3BD2B6E27FF525D00270438 /* MyDoubleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDoubleLabel.swift; sourceTree = "<group>"; };
+		E3BD2B6E27FF525D00270438 /* MyTripleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripleLabel.swift; sourceTree = "<group>"; };
 		E3BD2B7027FF529C00270438 /* InfoStageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoStageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -120,9 +120,9 @@
 			isa = PBXGroup;
 			children = (
 				E32EC2C427FC2799007B815F /* InformationView.swift */,
-				E3B50DB428005FCF00AF5CBD /* InfoCollectionViewCell.swift */,
 				E3BD2B7027FF529C00270438 /* InfoStageView.swift */,
-				E3BD2B6E27FF525D00270438 /* MyDoubleLabel.swift */,
+				E3BD2B6E27FF525D00270438 /* MyTripleLabel.swift */,
+				E3B50DB428005FCF00AF5CBD /* InfoCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -258,7 +258,7 @@
 				E32EC2A427FC15D1007B815F /* SceneDelegate.swift in Sources */,
 				E3B50DB928034F5A00AF5CBD /* LaunchesTableViewController.swift in Sources */,
 				E32EC2BE27FC16F6007B815F /* MainWorker.swift in Sources */,
-				E3BD2B6F27FF525D00270438 /* MyDoubleLabel.swift in Sources */,
+				E3BD2B6F27FF525D00270438 /* MyTripleLabel.swift in Sources */,
 				E3B50DBF2805C1A900AF5CBD /* SettingsViewController.swift in Sources */,
 				E32EC2CF27FC50A9007B815F /* ServiceFetcher.swift in Sources */,
 				E32EC2BD27FC16F6007B815F /* MainPresenter.swift in Sources */,

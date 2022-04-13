@@ -41,32 +41,48 @@ class InformationView: UIView {
     func applyData() {
         loadImage()
         headerLabel.text = model?.name ?? ""
+        
+        guard let model = model else { return }
 
-        infoLabel.setText(label1Text: ("Первый запуск", (model?.first_flight ?? "-")),
-                                label2Text: ("Страна", (model?.country ?? "")),
-                                label3Text: ("Стоймость запуска", "\(model?.cost_per_launch)"))
+        let cost_per_launch = String(model.cost_per_launch ?? 0)
+        
+        infoLabel.setText(label1Text: ("Первый запуск", getFormattedDate(model.first_flight ?? "")),
+                                label2Text: ("Страна", (model.country ?? "")),
+                                label3Text: ("Стоймость запуска", "\(cost_per_launch)"))
+        
+        guard let first_stage = model.first_stage else { return }
+        let engines = String(first_stage.engines ?? 0)
+        let fuel_amount_tons = String(first_stage.fuel_amount_tons ?? 0.0)
+        let burn_time_sec = String(first_stage.burn_time_sec ?? 0)
         
         firstStageLabel.setTitle(title: "ПЕРВАЯ СТУПЕНЬ")
-        firstStageLabel.setText(label1Text: ("Количество двигателей", "\(model?.first_stage?.engines)"),
-                                label2Text: ("Количество топлива", "\(model?.first_stage?.fuel_amount_tons)"),
-                                label3Text: ("Время сгорания", "\(model?.first_stage?.burn_time_sec)"))
+        firstStageLabel.setText(label1Text: ("Количество двигателей", engines),
+                                label2Text: ("Количество топлива", fuel_amount_tons),
+                                label3Text: ("Время сгорания", burn_time_sec))
+        
+        guard let second_stage = model.second_stage else { return }
+        let engines2 = String(second_stage.engines ?? 0)
+        let fuel_amount_tons2 = String(second_stage.fuel_amount_tons ?? 0.0)
+        let burn_time_sec2 = String(second_stage.burn_time_sec ?? 0)
         
         secondStageLabel.setTitle(title: "ВТОРАЯ СТУПЕНЬ")
-        secondStageLabel.setText(label1Text: ("Количество двигателей", "\(model?.second_stage?.engines)"),
-                                 label2Text: ("Количество топлива", "\(model?.second_stage?.fuel_amount_tons)"),
-                                 label3Text: ("Время сгорания", "\(model?.second_stage?.burn_time_sec)"))
+        secondStageLabel.setText(label1Text: ("Количество двигателей", engines2),
+                                 label2Text: ("Количество топлива", fuel_amount_tons2),
+                                 label3Text: ("Время сгорания", burn_time_sec2))
         
     }
     
-    private func setupText(bolt: String, normal: String) -> NSMutableAttributedString {
+    private func getFormattedDate(_ string: String) -> String{
+        
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
 
-        let attributsBold = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .bold)]
-        let attributsNormal = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 16, weight: .regular)]
-        let attributedString = NSMutableAttributedString(string: bolt, attributes: attributsBold)
-        let normalStringPart = NSMutableAttributedString(string: normal, attributes: attributsNormal)
-        attributedString.append(normalStringPart)
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "dd MMMM, yyyy"
+        dateFormatterPrint.locale = Locale(identifier: "ru_RUS")
 
-        return attributedString
+        let date: Date? = dateFormatterGet.date(from: string)
+        return dateFormatterPrint.string(from: date ?? Date() );
     }
     
     private func loadImage() {

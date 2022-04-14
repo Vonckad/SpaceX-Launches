@@ -15,7 +15,7 @@ import UIKit
 @objc protocol MainRoutingLogic
 {
   func routeToSomewhere(index: Int)
-  func routeToSettins()
+  func routeToSettins(metterings: [Item])
 }
 
 protocol MainDataPassing
@@ -29,8 +29,6 @@ class MainRouter: NSObject, MainRoutingLogic, MainDataPassing
   var dataStore: MainDataStore?
   
   // MARK: Routing
-  
-//    private var destinationVC = LaunchesTableViewController()
     
   func routeToSomewhere(index: Int)
   {
@@ -38,9 +36,10 @@ class MainRouter: NSObject, MainRoutingLogic, MainDataPassing
       navigateToSomewhere(source: viewController!, destination: destinationVC)
   }
 
-    func routeToSettins() {
-        let settingVC = SettingsViewController()
-//        settingVC.modalPresentationStyle = .formSheet
+    func routeToSettins(metterings: [Item]) {
+        guard let metteringItem = metterings.first else { return }
+        let settingVC = SettingsViewController(isHeightM: metteringItem.mH, isWidthM: metteringItem.mW, isMassKg: metteringItem.kgM, isPayloadKg: metteringItem.kgP)
+        settingVC.delegate = viewController
         viewController?.present(settingVC, animated: true)
     }
     

@@ -7,9 +7,9 @@
 
 import UIKit
 
-//protocol SettingsViewControllerDelegate {
-//    func dismissDetail()
-//}
+protocol SettingsViewControllerDelegate {
+    func settingsVCisDismissed(isHeightM: Bool, isWidthM: Bool, isMassKg: Bool, isPayloadKg: Bool)
+}
 
 class SettingsViewController: UIViewController {
         
@@ -30,7 +30,28 @@ class SettingsViewController: UIViewController {
     private let grayColor = UIColor.init(red: 142/255, green: 142/255, blue: 143/255, alpha: 1)
     private let attributedString: [NSAttributedString.Key : UIColor] = [.foregroundColor : .black]
     
-//    var delegate: SettingsViewControllerDelegate?
+    var delegate: SettingsViewControllerDelegate?
+    
+    private var isHeightM: Bool
+    private var isWidthM: Bool
+    private var isMassKg: Bool
+    private var isPayloadKg: Bool
+    
+    init(isHeightM: Bool, isWidthM: Bool, isMassKg: Bool, isPayloadKg: Bool) {
+        self.isHeightM = isHeightM
+        self.isWidthM = isWidthM
+        self.isMassKg = isMassKg
+        self.isPayloadKg = isPayloadKg
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("deinit SettingsViewController")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +59,15 @@ class SettingsViewController: UIViewController {
         configureLabels()
         configureSegmentedControls()
         setupConstraints()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        delegate?.settingsVCisDismissed(isHeightM: heightSegmentedControl.selectedSegmentIndex == 0,
+            isWidthM: widthSegmentedControl.selectedSegmentIndex == 0,
+            isMassKg: massSegmentedControl.selectedSegmentIndex == 0,
+            isPayloadKg: payloadSegmentedControl.selectedSegmentIndex == 0)
     }
     
     private func configureLabels() {
@@ -130,7 +160,7 @@ class SettingsViewController: UIViewController {
         heightSegmentedControl.selectedSegmentTintColor = .white
         heightSegmentedControl.tintColor = grayColor
         heightSegmentedControl.setTitleTextAttributes(attributedString, for: [.selected])
-        heightSegmentedControl.selectedSegmentIndex = 0
+        heightSegmentedControl.selectedSegmentIndex = isHeightM ? 1 : 0
         heightSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         heightSegmentedControl.overrideUserInterfaceStyle = .dark
         view.addSubview(heightSegmentedControl)
@@ -139,7 +169,7 @@ class SettingsViewController: UIViewController {
         widthSegmentedControl.selectedSegmentTintColor = .white
         widthSegmentedControl.tintColor = grayColor
         widthSegmentedControl.setTitleTextAttributes(attributedString, for: [.selected])
-        widthSegmentedControl.selectedSegmentIndex = 0
+        widthSegmentedControl.selectedSegmentIndex = isWidthM ? 1 : 0
         widthSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         widthSegmentedControl.overrideUserInterfaceStyle = .dark
         view.addSubview(widthSegmentedControl)
@@ -148,7 +178,7 @@ class SettingsViewController: UIViewController {
         massSegmentedControl.selectedSegmentTintColor = .white
         massSegmentedControl.tintColor = grayColor
         massSegmentedControl.setTitleTextAttributes(attributedString, for: [.selected])
-        massSegmentedControl.selectedSegmentIndex = 0
+        massSegmentedControl.selectedSegmentIndex = isMassKg ? 1 : 0
         massSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         massSegmentedControl.overrideUserInterfaceStyle = .dark
         view.addSubview(massSegmentedControl)
@@ -157,7 +187,7 @@ class SettingsViewController: UIViewController {
         payloadSegmentedControl.selectedSegmentTintColor = .white
         payloadSegmentedControl.tintColor = grayColor
         payloadSegmentedControl.setTitleTextAttributes(attributedString, for: [.selected])
-        payloadSegmentedControl.selectedSegmentIndex = 0
+        payloadSegmentedControl.selectedSegmentIndex = isPayloadKg ? 1 : 0
         payloadSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         payloadSegmentedControl.overrideUserInterfaceStyle = .dark
         view.addSubview(payloadSegmentedControl)

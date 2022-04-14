@@ -28,6 +28,7 @@ class InformationView: UIView {
     
     var model: SpaceRocketModel?
     var delegate: InformationViewDelegate?
+    var metterings: [Item]!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,6 +71,21 @@ class InformationView: UIView {
                                  label2Text: ("Количество топлива", fuel_amount_tons2),
                                  label3Text: ("Время сгорания", burn_time_sec2))
         
+    }
+   
+    func setMettering(isHeightM: Bool, isWidthM: Bool, isMassKg: Bool, isPayloadKg: Bool) {
+        guard let model = model else { return }
+        guard let height = model.height else { return }
+        (informationCollectionView.visibleCells[0] as! InfoCollectionViewCell).addData(value: isHeightM ? String(height.meters!) : String(height.feet!) , title: "Высота, \(isHeightM ? "m" : "ft")")
+        
+        guard let diameter = model.diameter else { return }
+        (informationCollectionView.visibleCells[1] as! InfoCollectionViewCell).addData(value: isWidthM ? String(diameter.meters!) : String(diameter.feet!) , title: "Диаметр, \(isWidthM ? "m" : "ft")")
+        
+        guard let mass = model.mass else { return }
+        (informationCollectionView.visibleCells[2] as! InfoCollectionViewCell).addData(value: isMassKg ? String(mass.kg!) : String(mass.lb!) , title: "Масса, \(isMassKg ? "kg" : "lb")")
+        
+        guard let payload_weights = model.payload_weights!.first else { return }
+        (informationCollectionView.visibleCells[3] as! InfoCollectionViewCell).addData(value: isPayloadKg ? String(payload_weights.kg!) : String(payload_weights.lb!) , title: "Нагрузка, \(isPayloadKg ? "kg" : "lb")")
     }
     
     private func getFormattedDate(_ string: String) -> String{
@@ -265,16 +281,22 @@ extension InformationView: UICollectionViewDataSource, UICollectionViewDelegate 
         cell.layer.cornerRadius = 32
         
         guard let model = model else { return cell }
+        
+        guard let metteringItem = metterings.first else { return cell }
+        guard let height = model.height else { return cell}
+        guard let diameter = model.diameter else { return cell}
+        guard let mass = model.mass else { return cell}
+        guard let payload_weights = model.payload_weights!.first else { return cell}
 
         switch indexPath.row {
         case 0:
-            cell.addData(value: "\(model.height!.meters!)", title: "Высота, m")
+            cell.addData(value: !metteringItem.mH ? String(height.meters!) : String(height.feet!) ,title: "Высота, \(!metteringItem.mH ? "m" : "ft")")
         case 1:
-            cell.addData(value: "\(model.diameter!.meters!)", title: "Диаметр, m")
+            cell.addData(value: !metteringItem.mW ? String(diameter.meters!) : String(diameter.feet!) ,title: "Диаметр, \(!metteringItem.mW ? "m" : "ft")")
         case 2:
-            cell.addData(value: "\(model.mass!.kg!)", title: "Масса, kg")
+            cell.addData(value: !metteringItem.kgM ? String(mass.kg!) : String(mass.lb!) , title: "Масса, \(!metteringItem.kgM ? "kg" : "lb")")
         case 3:
-            cell.addData(value: "\(model.payload_weights![0].kg!)", title: "Нагрузка, kg")
+            cell.addData(value: !metteringItem.kgP ? String(payload_weights.kg!) : String(payload_weights.lb!) ,title: "Нагрузка, \(!metteringItem.kgP ? "kg" : "lb")")
         default:
             break
         }

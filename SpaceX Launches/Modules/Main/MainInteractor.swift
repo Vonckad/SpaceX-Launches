@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol MainBusinessLogic
 {
@@ -29,7 +30,8 @@ class MainInteractor: MainBusinessLogic, MainDataStore
   var worker: MainWorker?
   var model = [SpaceRocketModel]()
   var modelRocketLaunches: LaunchesModel = .init(docs: [])
-  
+  let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     // MARK: Do something
   
     func doSomething(request: Main.Something.Request.RequestType)
@@ -37,22 +39,59 @@ class MainInteractor: MainBusinessLogic, MainDataStore
     worker = MainWorker()
     worker?.doSomeWork()
       
+      if self.loadItems().isEmpty {
+          let newItem = Item(context: self.context)
+          newItem.mH = false
+          newItem.mW = false
+          newItem.kgM = false
+          newItem.kgP = false
+          self.saveItems()
+      }
+      
       switch request {
       case .getSpaceRocket:
           let service: ServiceFetcherProtocol = ServiceFetcher()
           service.fetchSpaceRokets { result in
               self.model = result ?? [SpaceRocketModel]()
-              self.presenter?.presentSomething(response: .presentSpaceRocket(result ?? [SpaceRocketModel]()))
+              self.presenter?.presentSomething(response: .presentSpaceRocket(result ?? [SpaceRocketModel](), metterings: self.loadItems()))
           }
-//      case .getRocketLaunches(let rocket):
-//          presenter?.presentSomething(response: .presentRocketLaunches)
-//          let service: ServiceFetcherProtocol = ServiceFetcher()
-//          service.fetchSpaceRokets(rocket: rocket) { launches in
-//              guard let launches = launches else { return }
-//              self.modelRocketLaunches = launches
-//              self.presenter?.presentSomething(response: .loadedDataRocketLaunches)
-//              self.presenter?.presentSomething(response: .presentRocketLaunches)
-//          }
+      case .saveMetterings(isHeightM: let isHeightM, isWidthM: let isWidthM, isMassKg: let isMassKg, isPayloadKg: let isPayloadKg):
+          
+          let DelAllReqVar = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: "Item"))
+          do {
+              try context.execute(DelAllReqVar)
+          }
+          catch {
+              print(error)
+          }
+          
+          let item = Item(context: self.context)
+          item.mH = !isHeightM
+          item.mW = !isWidthM
+          item.kgM = !isMassKg
+          item.kgP = !isPayloadKg
+          self.saveItems()
+          presenter?.presentSomething(response: .updateMetterings(metterings: self.loadItems()))
       }
   }
+    
+    func saveItems(){
+        do{
+            try context.save()
+        }catch {
+            print("Error saving context with \(error)")
+        }
+    }
+    
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) -> [Item] {
+        var result: [Item] = []
+        do {
+            result = try context.fetch(request)
+        }catch{
+            print("Error fetching data from context \(error)")
+        }
+//        print("loadItems = \(result)")
+        return result
+        
+    }
 }

@@ -26,12 +26,10 @@ class MainPresenter: MainPresentationLogic
     func presentSomething(response: Main.Something.Response.ResponseType)
   {
       switch response {
-      case .presentSpaceRocket(let spaseRockets):
-          viewController?.displaySomething(viewModel: .spaceRocket(spaseRockets))
-//      case .presentRocketLaunches:
-//          viewController?.displaySomething(viewModel: .showRocketLaunches)
-//      case .loadedDataRocketLaunches:
-//          viewController?.displaySomething(viewModel: .showDataRocketLaunches)
+      case .presentSpaceRocket(let spaseRockets, let metterings):
+          viewController?.displaySomething(viewModel: .spaceRocket(spaseRockets, metterings: metterings))
+      case .updateMetterings(metterings: let metterings):
+          viewController?.displaySomething(viewModel: .updateMetterings(metterings: metterings))
       }
   }
 }

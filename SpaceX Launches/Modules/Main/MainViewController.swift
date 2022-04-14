@@ -81,6 +81,7 @@ class MainViewController: UIViewController, MainDisplayLogic
   
     private var scrollView: UIScrollView!
     private var pageControl: UIPageControl!
+    private var metterings: [Item]!
   
   func doSomething()
   {
@@ -90,16 +91,15 @@ class MainViewController: UIViewController, MainDisplayLogic
     func displaySomething(viewModel: Main.Something.ViewModel.viewModelData)
   {
       switch viewModel {
-      case .spaceRocket(let spaceRocket):
-          configureUI(with: spaceRocket)
-//      case .showRocketLaunches:
-//          router?.routeToSomewhere(index: pageControl.currentPage)
-//      case .showDataRocketLaunches:
-//          router?.addDataLaunches()
+      case .spaceRocket(let spaceRocket, let metterings):
+          self.metterings = metterings
+          configureUI(with: spaceRocket, metterings: metterings)
+      case .updateMetterings(metterings: let metterings):
+          self.metterings = metterings
       }
   }
     
-    private func configureUI(with model: [SpaceRocketModel]) {
+    private func configureUI(with model: [SpaceRocketModel], metterings: [Item]) {
         navigationItem.backButtonTitle = "Назад"
         
         
@@ -122,6 +122,7 @@ class MainViewController: UIViewController, MainDisplayLogic
             informationView.model = infModel
             informationView.applyData()
             informationView.delegate = self
+            informationView.metterings = metterings
             scrollView.addSubview(informationView)
         }
         
@@ -149,11 +150,18 @@ extension MainViewController: UIScrollViewDelegate {
 
 extension MainViewController: InformationViewDelegate {
     func watchLaunches() {
-//        interactor?.doSomething(request: .getRocketLaunches(rocket))
         router?.routeToSomewhere(index: pageControl.currentPage)
     }
     
     func openSettings() {
-        router?.routeToSettins()
+        router?.routeToSettins(metterings: metterings)
+    }
+}
+
+extension MainViewController: SettingsViewControllerDelegate {
+    func settingsVCisDismissed(isHeightM: Bool, isWidthM: Bool, isMassKg: Bool, isPayloadKg: Bool) {
+        guard let informationViews = scrollView.subviews as? [InformationView] else { return }
+        interactor?.doSomething(request: .saveMetterings(isHeightM: isHeightM, isWidthM: isWidthM, isMassKg: isMassKg, isPayloadKg: isPayloadKg))
+        informationViews.compactMap { $0.setMettering(isHeightM: isHeightM, isWidthM: isWidthM, isMassKg: isMassKg, isPayloadKg: isPayloadKg)}
     }
 }

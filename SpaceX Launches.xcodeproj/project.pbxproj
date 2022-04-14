@@ -26,6 +26,7 @@
 		E3B50DB928034F5A00AF5CBD /* LaunchesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B50DB828034F5A00AF5CBD /* LaunchesTableViewController.swift */; };
 		E3B50DBC28042F8700AF5CBD /* LaunchesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B50DBB28042F8600AF5CBD /* LaunchesTableViewCell.swift */; };
 		E3B50DBF2805C1A900AF5CBD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B50DBE2805C1A900AF5CBD /* SettingsViewController.swift */; };
+		E3B50DC22808488F00AF5CBD /* SettingsModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3B50DC02808488F00AF5CBD /* SettingsModel.xcdatamodeld */; };
 		E3BD2B6F27FF525D00270438 /* MyTripleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BD2B6E27FF525D00270438 /* MyTripleLabel.swift */; };
 		E3BD2B7127FF529C00270438 /* InfoStageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BD2B7027FF529C00270438 /* InfoStageView.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		E3B50DB828034F5A00AF5CBD /* LaunchesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesTableViewController.swift; sourceTree = "<group>"; };
 		E3B50DBB28042F8600AF5CBD /* LaunchesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchesTableViewCell.swift; sourceTree = "<group>"; };
 		E3B50DBE2805C1A900AF5CBD /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		E3B50DC12808488F00AF5CBD /* SettingsModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SettingsModel.xcdatamodel; sourceTree = "<group>"; };
 		E3BD2B6E27FF525D00270438 /* MyTripleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripleLabel.swift; sourceTree = "<group>"; };
 		E3BD2B7027FF529C00270438 /* InfoStageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoStageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 				E32EC2AA27FC15D8007B815F /* Assets.xcassets */,
 				E32EC2AC27FC15D8007B815F /* LaunchScreen.storyboard */,
 				E32EC2AF27FC15D8007B815F /* Info.plist */,
+				E3B50DC02808488F00AF5CBD /* SettingsModel.xcdatamodeld */,
 			);
 			path = "SpaceX Launches";
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				E32EC2A427FC15D1007B815F /* SceneDelegate.swift in Sources */,
 				E3B50DB928034F5A00AF5CBD /* LaunchesTableViewController.swift in Sources */,
 				E32EC2BE27FC16F6007B815F /* MainWorker.swift in Sources */,
+				E3B50DC22808488F00AF5CBD /* SettingsModel.xcdatamodeld in Sources */,
 				E3BD2B6F27FF525D00270438 /* MyTripleLabel.swift in Sources */,
 				E3B50DBF2805C1A900AF5CBD /* SettingsViewController.swift in Sources */,
 				E32EC2CF27FC50A9007B815F /* ServiceFetcher.swift in Sources */,
@@ -482,6 +486,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E3B50DC02808488F00AF5CBD /* SettingsModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E3B50DC12808488F00AF5CBD /* SettingsModel.xcdatamodel */,
+			);
+			currentVersion = E3B50DC12808488F00AF5CBD /* SettingsModel.xcdatamodel */;
+			path = SettingsModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E32EC29627FC15D1007B815F /* Project object */;
 }

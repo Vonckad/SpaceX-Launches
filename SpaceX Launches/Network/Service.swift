@@ -10,6 +10,7 @@ import Foundation
 protocol ServiceProtocol {
     func request(complition: @escaping (Data?, Error?) -> ())
     func requestLaunches(rocket: String, complition: @escaping (Data?, Error?) -> ())
+    func loadImage(stringURL: String, complition: @escaping (Data?, Error?) -> ())
 }
 
 class Service: ServiceProtocol {
@@ -20,7 +21,7 @@ class Service: ServiceProtocol {
         urlRequest.httpMethod = "get"
         let dataTask = createDataTask(from: urlRequest, complition: complition)
         dataTask.resume()
-        print("url = \(url)")
+//        print("url = \(url)")
     }
     
     func requestLaunches(rocket: String, complition: @escaping (Data?, Error?) -> ()) {
@@ -45,7 +46,18 @@ class Service: ServiceProtocol {
         urlRequest.allHTTPHeaderFields = headers
         let dataTask = createDataTask(from: urlRequest, complition: complition)
         dataTask.resume()
-        print("url = \(url)")
+//        print("url = \(url)")
+    }
+    
+    func loadImage(stringURL: String, complition: @escaping (Data?, Error?) -> ()) {
+        DispatchQueue.global(qos: .utility).async {
+            guard let url = URL(string: stringURL) else { return }
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                DispatchQueue.main.async {
+                    complition(data, error)
+                }
+            }.resume()
+        }
     }
     
     private func createDataTask(from request: URLRequest, complition: @escaping (Data?, Error?) -> ()) -> URLSessionDataTask {

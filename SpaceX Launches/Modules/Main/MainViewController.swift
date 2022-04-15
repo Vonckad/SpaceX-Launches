@@ -93,7 +93,7 @@ class MainViewController: UIViewController, MainDisplayLogic
       switch viewModel {
       case .spaceRocket(let spaceRocket, let metterings):
           self.metterings = metterings
-          configureUI(with: spaceRocket, metterings: metterings)
+          spaceRocket.isEmpty ? self.createAlertView() : configureUI(with: spaceRocket, metterings: metterings)
       case .updateMetterings(metterings: let metterings):
           self.metterings = metterings
       }
@@ -139,6 +139,15 @@ class MainViewController: UIViewController, MainDisplayLogic
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    private func createAlertView() {
+        let allert = UIAlertController.init(title: "Сбой загрузки!", message: "Проверьте подключение к интернету", preferredStyle: .alert)
+        let reloadAction = UIAlertAction(title: "Обновить", style: .default) { _ in
+            self.interactor?.doSomething(request: .getSpaceRocket)
+        }
+        allert.addAction(reloadAction)
+        present(allert, animated: true, completion: nil)
     }
 }
 

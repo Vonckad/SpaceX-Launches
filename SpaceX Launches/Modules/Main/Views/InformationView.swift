@@ -25,10 +25,13 @@ class InformationView: UIView {
     private var imageView: UIImageView!
     private var backgroundView: UIView!
     private var watchButton: UIButton!
+    private var activityIndicatorView = UIActivityIndicatorView(style: .large)
+    private var reloadButton: UIButton!
     
     var model: SpaceRocketModel?
     var delegate: InformationViewDelegate?
     var metterings: [Item]!
+    let service: ServiceProtocol = Service()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -72,6 +75,24 @@ class InformationView: UIView {
                                  label3Text: ("Время сгорания", burn_time_sec2))
         
     }
+    
+    private func configureActivityIndicatorView() {
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.color = .white
+        activityIndicatorView.center = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY / 3)
+        backgroundView.addSubview(activityIndicatorView)
+        configureReloadButton()
+    }
+    
+    private func configureReloadButton() {
+        reloadButton = UIButton()
+        reloadButton.frame = CGRect(x: activityIndicatorView.center.x - 40, y: activityIndicatorView.center.y - 25, width: 80, height: 50)
+        reloadButton.isHidden = true
+        reloadButton.tintColor = .white
+        reloadButton.setBackgroundImage(.init(systemName: "arrow.2.squarepath"), for: .normal)
+        reloadButton.addTarget(self, action: #selector(loadImage), for: .touchUpInside)
+        backgroundView.addSubview(reloadButton)
+    }
    
     func setMettering(isHeightM: Bool, isWidthM: Bool, isMassKg: Bool, isPayloadKg: Bool) {
         guard let model = model else { return }
@@ -101,29 +122,32 @@ class InformationView: UIView {
         return dateFormatterPrint.string(from: date ?? Date() );
     }
     
+    @objc
     private func loadImage() {
-        if let imageUrl = URL(string: model?.flickr_images?.first ?? "") {
-            DispatchQueue.global().async { [weak self] in
-                if let imageData = try? Data(contentsOf: imageUrl) {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.imageView.image = UIImage(data: imageData)
-                    }
-                }
+        reloadButton.isHidden = true
+        activityIndicatorView.startAnimating()
+        service.loadImage(stringURL: model?.flickr_images?.first ?? "") { [weak self] data, error in
+            if error != nil {
+                self?.activityIndicatorView.stopAnimating()
+                self?.reloadButton.isHidden = false
             }
+            guard let data = data else { return }
+            self?.activityIndicatorView.stopAnimating()
+            self?.imageView.image = UIImage(data: data) ?? UIImage()
         }
     }
     
     private func configureUI() {
         self.backgroundColor = .systemBackground
         
+        backgroundView = UIView()
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        
         scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.backgroundColor = .black
         
-        backgroundView = UIView()
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-                
         imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -252,7 +276,7 @@ class InformationView: UIView {
             backgroundView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             scrollView.rightAnchor.constraint(equalTo: backgroundView.rightAnchor),
         ])
-        
+        configureActivityIndicatorView()
     }
     
     @objc func watchNow() {

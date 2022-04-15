@@ -16,9 +16,9 @@ class ServiceFetcher: ServiceFetcherProtocol {
 
     var service: ServiceProtocol = Service()
     
-    deinit {
-        print("deinit")
-    }
+//    deinit {
+//        print("deinit")
+//    }
     
     func fetchSpaceRokets(complition: @escaping ([SpaceRocketModel]?) -> Void) {
         service.request() { data, error in

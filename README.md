@@ -11,4 +11,4 @@
 </p>
 
 ## Процесс
-Ссылка надоску в Trello https://trello.com/b/MMIDvSg6/spacex
+Ссылка на доску в Trello https://trello.com/b/MMIDvSg6/spacex
